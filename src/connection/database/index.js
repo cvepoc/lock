@@ -331,12 +331,20 @@ export function defaultDatabaseConnectionName(m) {
 }
 
 export function databaseConnection(m) {
-  return (
+  const result =
     l.resolvedConnection(m) ||
     defaultDirectory(m) ||
     defaultDatabaseConnection(m) ||
-    l.connection(m, 'database')
-  );
+    l.connection(m, 'database');
+
+  function p(o) {
+    if (o) return o.toJS();
+    return o;
+  }
+
+  // console.log(p(l.resolvedConnection(m)), p(defaultDirectory(m)), p(defaultDatabaseConnection(m)), p(l.connection(m, 'database')));
+  // console.log(result.toJS());
+  return result;
 }
 
 export function databaseConnectionName(m) {
@@ -389,6 +397,8 @@ export function databaseConnectionRequiresUsername(m) {
 
 export function databaseUsernameStyle(m) {
   if (l.hasSomeConnections(m, 'database')) {
+    console.log(true);
+    console.log(databaseConnection(m).toJS());
     return databaseConnectionRequiresUsername(m) ? get(m, 'usernameStyle', 'any') : 'email';
   }
 

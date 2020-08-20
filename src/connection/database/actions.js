@@ -26,6 +26,8 @@ export function logIn(id, needsMFA = false) {
     password: c.getFieldValue(m, 'password')
   };
 
+  console.log(usernameField, username);
+
   const fields = [usernameField, 'password'];
 
   const isCaptchaValid = setCaptchaParams(m, params, fields);

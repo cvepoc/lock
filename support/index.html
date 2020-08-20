@@ -120,40 +120,30 @@
       });
     </script>
     <script>
-      var clientId = 'BWDP9XS89CJq1w6Nzq7iFOHsTh6ChS2b';
-      var domain = 'brucke.auth0.com';
+      var clientId = 'TgqxTDJFG2G3H5TjqvIEEVL5i6IcZGye';
+      var domain = 'elkdanger.eu.auth0.com';
       var defaultOptions = {
-        mustAcceptTerms: true,
-        initialScreen: 'signUp',
-        allowShowPassword: true,
-        usernameStyle: 'email',
-        defaultDatabaseConnection: 'acme',
-        prefill: {
-          email: 'johnfoo@gmail.com'
+        // mustAcceptTerms: true,
+        // initialScreen: 'signUp',
+        // allowShowPassword: true,
+        // usernameStyle: 'email',
+        defaultDatabaseConnection: 'Test2',
+        connectionResolver: function(username, context, cb) {
+          var isEmail = username.indexOf('@') !== -1;
+          var connection = isEmail ? 'Test2' : 'Test';
+          console.log(username, context, isEmail, connection);
+          cb({ type: 'database', name: connection });
         },
-        passwordlessMethod: 'code',
-        auth: {
-          params: {
-            nonce: 'foo',
-            state: 'bar'
-          }
-        },
-        additionalSignUpFields: [
-          {
-            name: 'name',
-            placeholder: 'name',
-            validator: function() {
-              return true;
-            }
-          },
-          {
-            name: 'other_name',
-            placeholder: 'other name',
-            validator: function() {
-              return true;
-            }
-          }
-        ]
+        // prefill: {
+        //   email: 'johnfoo@gmail.com'
+        // },
+        // passwordlessMethod: 'code',
+        // auth: {
+        //   params: {
+        //     nonce: 'foo',
+        //     state: 'bar'
+        //   }
+        // }
       };
       function initLock() {
         var lock = new Auth0Lock(clientId, domain, defaultOptions);
